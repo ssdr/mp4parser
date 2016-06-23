@@ -1,2 +1,5 @@
 # mp4parser
-a mp4 parser for study the format of the mp4 file
+
+A mp4 parser for learning mp4 file format :smilley:
+
+Origin repo: [mpfour](https://github.com/Jackarain/mpfour.git)

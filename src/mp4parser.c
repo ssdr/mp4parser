@@ -5,17 +5,18 @@
 int main(int argc, char* argv[])
 {
     if(argc < 2){
-        printf("Invalid argument, useage: \n mp4parser /path/to/mp4file \n");
+        printf("Useage: mp4parser /path/to/mp4file \n");
         return -1;
     }
 
     stream_t* s = create_file_stream();
     if (stream_open(s, argv[1], MODE_READ) == 0){
-         printf("Can not open file\n");
-       return -1;
+        printf("Can not open file\n");
+        return -1;
     }
 
     mp4_box_t *root, *SearchResult;
+
     SearchResult = MP4_BoxGetRoot(s);
 
     printf("search result box is %c%c%c%c\n",SearchResult->i_type&0x000000ff,(SearchResult->i_type&0x0000ff00)>>8,(SearchResult->i_type&0x00ff0000)>>16,(SearchResult->i_type&0xff000000)>>24);
