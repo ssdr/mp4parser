@@ -117,12 +117,12 @@ int buf_file_read(stream_t *stream_s, void* buf, int size)
    while (size > 0)
    {
       int read_bytes = 0;
-      if (s->read_buf_s.offset > s->offset || 
+      if (s->read_buf_s.offset > s->offset ||
          s->read_buf_s.offset + s->read_buf_s.bufsize <= s->offset ||
          s->read_buf_s.bufsize == -1)
       {
          int read_bytes, ret;
-         // 先定位到offset, 再进行读操作.
+         // 鍏堝畾浣嶅埌offset, 鍐嶈繘琛岃鎿嶄綔.
          ret = file_seek(stream_s, s->offset, SEEK_SET);
          if (ret != 0)
          {
@@ -145,7 +145,7 @@ int buf_file_read(stream_t *stream_s, void* buf, int size)
       remainder = s->read_buf_s.bufsize - position;
       read_bytes = min(size, remainder);
 
-      memcpy((char*)buf + length, 
+      memcpy((char*)buf + length,
          (char*)s->read_buf_s.buf + position, read_bytes);
 
       length += read_bytes;
@@ -180,7 +180,7 @@ int buf_file_write(stream_t *stream_s, void *buf, int size)
       write_bytes = 0;
       while (write_bytes != s->write_buf_s.bufsize)
       {
-         int n = file_write(stream_s, (char*)s->write_buf_s.buf + write_bytes, 
+         int n = file_write(stream_s, (char*)s->write_buf_s.buf + write_bytes,
             s->write_buf_s.bufsize - write_bytes);
          if (n < 0)
             return n;
@@ -244,7 +244,7 @@ uint64_t buf_file_seek(stream_t *stream_s, int64_t offset, int whence)
    if (ret != 0)
       return ret;
    s->offset = file_tell(stream_s);
-   if (s->read_buf_s.offset > s->offset || 
+   if (s->read_buf_s.offset > s->offset ||
       s->read_buf_s.offset + s->read_buf_s.bufsize <= s->offset)
       s->read_buf_s.bufsize = -1;
    else
@@ -265,7 +265,7 @@ int buf_file_close(stream_t *stream_s)
       write_bytes = 0;
       while (write_bytes != s->write_buf_s.bufsize)
       {
-         int n = file_write(stream_s, (char*)s->write_buf_s.buf + write_bytes, 
+         int n = file_write(stream_s, (char*)s->write_buf_s.buf + write_bytes,
             s->write_buf_s.bufsize - write_bytes);
          if (n < 0)
             return n;

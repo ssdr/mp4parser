@@ -9,7 +9,7 @@
                  typeof(y) _min2 = (y);                  \
                  (void) (&_min1 == &_min2);              \
                  _min1 < _min2 ? _min1 : _min2; })
-   
+
 #define max(x, y) ({                            \
                  typeof(x) _max1 = (x);                  \
                  typeof(y) _max2 = (y);                  \
@@ -17,7 +17,7 @@
                  _max1 > _max2 ? _max1 : _max2; })
 
 
-// ÀàĞÍ¶¨Òå.
+// ç±»å‹å®šä¹‰.
 #ifndef _STDINT_H
 //#ifdef _INTTYPES_H
 typedef signed char int8_t;
@@ -31,14 +31,14 @@ typedef unsigned long long uint64_t;
 typedef unsigned long size_t;
 #endif
 
-// ´ò¿ª·½Ê½.
+// æ‰“å¼€æ–¹å¼.
 #define MODE_READ             (1)
 #define MODE_WRITE            (2)
 #define MODE_READWRITEFILTER  (3)
 #define MODE_EXISTING         (4)
 #define MODE_CREATE           (8)
 
-// ¶ÁĞ´½á¹¹¶¨Òå.
+// è¯»å†™ç»“æ„å®šä¹‰.
 typedef struct stream {
    void* (*open)(struct stream *stream_s, const char* filename, int mode);
    int (*read)(struct stream *stream_s, void* buf, int size);
@@ -50,7 +50,7 @@ typedef struct stream {
    void* opaque;
 } stream_t;
 
-// ¶ÁĞ´ºê¶¨Òå.
+// è¯»å†™å®å®šä¹‰.
 #define stream_open(s, filename, mode) ((stream_t*)s)->open(((stream_t*)s), filename, mode)
 #define stream_read(s, buf, size) ((stream_t*)s)->read(((stream_t*)s), buf, size)
 #define stream_write(s, buf, size) ((stream_t*)s)->write(((stream_t*)s), buf, size)
@@ -59,7 +59,7 @@ typedef struct stream {
 #define stream_tell(s) ((stream_t*)s)->tell(((stream_t*)s))
 #define stream_close(s) ((stream_t*)s)->close(((stream_t*)s))
 
-// ÎÄ¼ş¶ÁĞ´.
+// æ–‡ä»¶è¯»å†™.
 void* file_open(stream_t *stream_s, const char* filename, int mode);
 int file_read(stream_t *stream_s, void* buf, int size);
 int file_write(stream_t *stream_s, void *buf, int size);
@@ -68,12 +68,12 @@ uint64_t file_seek(stream_t *stream_s, int64_t offset, int whence);
 uint64_t file_tell(stream_t *stream_s);
 int file_close(stream_t *stream_s);
 
-// ´´½¨ÎÄ¼ş¶ÁĞ´Á÷.
+// åˆ›å»ºæ–‡ä»¶è¯»å†™æµ.
 stream_t* create_file_stream();
 void destory_file_stream(stream_t* stream_s);
 
 
-// Ò»¸ö´ø¶ÁĞ´»º³åµÄÎÄ¼şstreamÊµÏÖ.
+// ä¸€ä¸ªå¸¦è¯»å†™ç¼“å†²çš„æ–‡ä»¶streamå®ç°.
 #define READ_BUFFER_SIZE   10485760
 #define WRITE_BUFFER_SIZE  10485760
 
@@ -81,36 +81,36 @@ typedef struct buf_stream {
    stream_t s;
 
    struct read_buf {
-      void* buf;        // ¶Á»º³å.
-      int64_t bufsize;  // »º³å´óĞ¡.
-      int64_t offset;   // ÔÚÎÄ¼şÖĞµÄoffset.
+      void* buf;        // è¯»ç¼“å†².
+      int64_t bufsize;  // ç¼“å†²å¤§å°.
+      int64_t offset;   // åœ¨æ–‡ä»¶ä¸­çš„offset.
    } read_buf_s;
 
    struct write_buf {
-      void* buf;        // Ğ´»º³å.
-      int64_t bufsize;  // »º³å´óĞ¡.
-      int64_t offset;   // Ğ´ÎÄ¼şµÄoffset.
+      void* buf;        // å†™ç¼“å†².
+      int64_t bufsize;  // ç¼“å†²å¤§å°.
+      int64_t offset;   // å†™æ–‡ä»¶çš„offset.
    } write_buf_s;
 
-   uint64_t offset;     // µ±Ç°¶ÁĞ´Ö¸ÕëÔÚÎÄ¼şÖĞµÄoffset.
+   uint64_t offset;     // å½“å‰è¯»å†™æŒ‡é’ˆåœ¨æ–‡ä»¶ä¸­çš„offset.
 
 } buf_stream_t;
 
-// ´ø»º³åµÄ¶ÁĞ´ÊµÏÖ.
+// å¸¦ç¼“å†²çš„è¯»å†™å®ç°.
 int buf_file_read(stream_t *stream_s, void* buf, int size);
 int buf_file_write(stream_t *stream_s, void *buf, int size);
 int buf_file_peek(stream_t *stream_s, void* buf, int size);
 uint64_t buf_file_seek(stream_t *stream_s, int64_t offset, int whence);
 int buf_file_close(stream_t *stream_s);
 
-// ´´½¨´ø»º³åµÄÎÄ¼ş¶ÁĞ´Á÷.
+// åˆ›å»ºå¸¦ç¼“å†²çš„æ–‡ä»¶è¯»å†™æµ.
 stream_t* create_buf_file_stream();
 void destory_buf_file_stream(stream_t* stream_s);
 
-// ´óĞ¡¶Ë¶ÁĞ´²Ù×÷ÊµÏÖ.
+// å¤§å°ç«¯è¯»å†™æ“ä½œå®ç°.
 //#define LIL_ENDIAN	1234
 //#define BIG_ENDIAN	4321
-/* #define BYTEORDER    1234 ? ÈÃÏÂÃæºê¸ù¾İÏµÍ³½øĞĞÅĞ¶Ï´óĞ¡¶Ë. */
+/* #define BYTEORDER    1234 ? è®©ä¸‹é¢å®æ ¹æ®ç³»ç»Ÿè¿›è¡Œåˆ¤æ–­å¤§å°ç«¯. */
 
 #ifndef BYTEORDER
 #if defined(__hppa__) || \

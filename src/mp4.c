@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include "mp4.h"
 
-#define MP4_DEBUG 0 
+#define MP4_DEBUG 0
 
 #if MP4_DEBUG
 
@@ -653,19 +653,19 @@ static int MP4_ReadBox_tkhd(  stream_t *p_stream, mp4_box_t *p_box )
     MP4_GET4BYTES( p_box->data.p_tkhd->width );
     MP4_GET4BYTES( p_box->data.p_tkhd->height );
 
-    
+
     matrix = p_box->data.p_tkhd->matrix;
-    
+
     translate[0] = conv_fx(matrix[6]);
     translate[1] = conv_fx(matrix[7]);
-    
+
     scale[0] = sqrt(conv_fx(matrix[0]) * conv_fx(matrix[0]) +
                     conv_fx(matrix[3]) * conv_fx(matrix[3]));
     scale[1] = sqrt(conv_fx(matrix[1]) * conv_fx(matrix[1]) +
                     conv_fx(matrix[4]) * conv_fx(matrix[4]));
-    
+
     rotation = atan2(conv_fx(matrix[1]) / scale[1], conv_fx(matrix[0]) / scale[0]) * 180 / M_PI;
-    
+
     if (rotation < 0)
         rotation += 360.;
 
@@ -1287,7 +1287,7 @@ static int MP4_ReadBox_dac3( stream_t *p_stream, mp4_box_t *p_box )
     MP4_READBOX_ENTER( mp4_box_data_dac3_t );
 
     p_dac3 = p_box->data.p_dac3;
-    
+
     MP4_GET3BYTES( i_header );
 
     p_dac3->fscod = ( i_header >> 22 ) & 0x03;
@@ -2506,7 +2506,7 @@ static int MP4_ReadBox_drms( stream_t *p_stream, mp4_box_t *p_box )
       {
          assert(0);
          //             const char *psz_error;
-         // 
+         //
          //             switch( i_ret )
          //             {
          //                 case -1: psz_error = "unimplemented"; break;
@@ -2523,9 +2523,9 @@ static int MP4_ReadBox_drms( stream_t *p_stream, mp4_box_t *p_box )
          //             else
          //                 msg_Err( p_stream, "drms_init(c%3.3s) failed (%s)",
          //                         (char *)&p_box->i_type+1, psz_error );
-         // 
+         //
          //             drms_free( p_drms );
-         // 
+         //
          //             if( p_drms_box->i_type == ATOM_drms )
          //                 p_drms_box->data.p_sample_soun->p_drms = NULL;
          //             else if( p_drms_box->i_type == ATOM_drmi )
@@ -3015,7 +3015,7 @@ static int MP4_ReadBox_tfra( stream_t *p_stream, mp4_box_t *p_box )
    //     {
    //         msg_Dbg( p_stream, "time[0]: %"PRIu32", moof_offset[0]: %"PRIx32"",
    //                          p_tfra->time[0], p_tfra->moof_offset[0] );
-   // 
+   //
    //         msg_Dbg( p_stream, "time[1]: %"PRIu32", moof_offset[1]: %"PRIx32"",
    //                          p_tfra->time[1], p_tfra->moof_offset[1] );
    //     }
@@ -3024,12 +3024,12 @@ static int MP4_ReadBox_tfra( stream_t *p_stream, mp4_box_t *p_box )
    //         msg_Dbg( p_stream, "time[0]: %"PRIu64", moof_offset[0]: %"PRIx64"",
    //                 ((uint64_t *)(p_tfra->time))[0],
    //                 ((uint64_t *)(p_tfra->moof_offset))[0] );
-   // 
+   //
    //         msg_Dbg( p_stream, "time[1]: %"PRIu64", moof_offset[1]: %"PRIx64"",
    //                 ((uint64_t *)(p_tfra->time))[1],
    //                 ((uint64_t *)(p_tfra->moof_offset))[1] );
    //     }
-   // 
+   //
    //     msg_Info( p_stream, "number_of_entries is %"PRIu32"", number_of_entries );
    //     msg_Info( p_stream, "track ID is: %"PRIu32"", p_tfra->track_ID );
    // #endif
